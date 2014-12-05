@@ -11,4 +11,4 @@ main.o: main.cpp
 clean:
 	rm *.o dict
 
-
+ 
