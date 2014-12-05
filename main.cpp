@@ -17,6 +17,12 @@ DICT dictionary;  //your dictionary
 WORD word;        //
 int count[MAX];   //tracks word frequencies
 
+int LocateWord(DICT, WORD);
+BOOL FullDictionary(DICT);
+BOOL InsertWord(DICT,WORD);
+WORD GetNextWord(void);
+void DumpDictionary(DICT ,int[]);
+
 
 
 int main (void) {
@@ -25,7 +31,7 @@ int main (void) {
     while (1) {
        word = GetNextWord();
 
-       if ( 0 == word )  {
+       if ( 0 == word.length() )  {
            DumpDictionary(dictionary,count);
            break;
        }

@@ -34,6 +34,8 @@ typedef WORD DICT[MAX];
 /*
   you will have to write code for these 5 functions.
 */
+
+
 int LocateWord(DICT, WORD);
 BOOL FullDictionary(DICT);
 BOOL InsertWord(DICT,WORD);
@@ -44,18 +46,20 @@ void DumpDictionary(DICT ,int[]);
 /*
   note that these are global variables so that they are already initialized to 0
 */
-DICT dictionary;  //your dictionary
-WORD word;        //
-int count[MAX];   //tracks word frequencies
+
+//DICT dictionary;  //your dictionary
+//WORD word;        //
+//int count[MAX];   //tracks word frequencies
 
 DICT idict;
 DICT sdict;
 
 string wrd;
+string emptystr;
 
 char ch;
-char nxtwrd=[100];
-int scount=[100];
+char nxtwrd[100]={0};
+int scount[100]={0};
 
 int num;
 int i = 0;
@@ -98,16 +102,16 @@ void DumpDictionary(DICT dict, int count[]) {
 
 
 
-	for(int i = 0; i<MAX; i++){                    
+	for(int i = 0; i<numWord; i++){                    
                                                         //Nested for loop to sort the unsorted
-		for(int j = 0; j<MAX;j++){              //array of strings, runs through putting
+		for(int j = 0; j<numWord;j++){              //array of strings, runs through putting
 							// each string in apporpraite location
                 if( dict[i]>dict[j] )     		              
                 num++;				       
 		}
 
-        sdict[num] = dict[i];
-        scount[num]= count[i];
+       sdict[num] = dict[i];
+       scount[num]= count[i];
         num=0;
 	}
 
@@ -117,9 +121,9 @@ void DumpDictionary(DICT dict, int count[]) {
 	cout << "Word                    Frequency"<<endl;
 	cout << "---------------------------------" <<endl;          //table and output for the dictionary
                                                                      //with the appropriate spacing
-	for(int i =0;i<max;i++){
-    cout << setw(15) << sdict[i].data << "          " << setw(5) << scount[i];      
-    }								      
+	for(int i =0;i<numWord;i++){
+        cout <<left << setw(15) << sdict[i] << "          " << setw(5) << (scount[i]+1)<<endl;      
+        }								      
 
 
 
@@ -145,7 +149,7 @@ WORD GetNextWord(void){
 
     		if ( isalpha(ch) ) {            /* function test is ch  is A-Z, a-z */
        		ch = char(tolower(ch));
-                nxtwrd[i] = ch;             //char array nxtwrd that gets the new word
+                nxtwrd[i] = ch;             //char array nxtwrd that gets the new word RESET NXTWRD
         	newline = 1;
    		i++;
                 }
@@ -153,9 +157,11 @@ WORD GetNextWord(void){
    		else if (newline){
        		newline = 0;
         	string str(nxtwrd);         //string str that the new word goes into
-		idict[x] = str;             // put into an array, once all words processed fall out
-                x++;
-                i=0;                
+		str= str.substr(0,10);
+                idict[x] = str;             // put into an array, once all words processed fall out
+                for(int p=0;p<i;p++) nxtwrd[p]= '\0';  //doesnt work so find another way!!           
+		x++;
+                i=0; 
 		}
 
         }
@@ -163,7 +169,7 @@ WORD GetNextWord(void){
     y++;
     check = 1;                             //then the appropraite word is returned 
     if (y<=100)return idict[y];            // when the function is called or 0 if none left
-    else return 0;
+    else return "";
 }
 
 
